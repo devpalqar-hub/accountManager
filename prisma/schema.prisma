@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  role      UserRole  @default(ADMIN)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
+  payments  Payment[]
+
+  @@map("users")
+}
+
+model Project {
+  id            String        @id @default(uuid())
+  title         String
+  clientDetails String?       @db.Text
+  startDate     DateTime?
+  endDate       DateTime?
+  description   String?       @db.Text
+  status        String?       @default("ACTIVE")
+  budget        Decimal?      @db.Decimal(10, 2)
+  createdBy     String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user         User          @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  payments     Payment[]
+  workPackages WorkPackage[]
+
+  @@map("projects")
+}
+
+model WorkPackage {
+  id                  String              @id @default(uuid())
+  workPackageName     String
+  amount              Decimal             @db.Decimal(10, 2)
+  version             String?
+  startDate           DateTime?
+  completionDate      DateTime?
+  advanceAmount       Decimal?            @db.Decimal(10, 2)
+  miscellaneousAmount Decimal?            @db.Decimal(10, 2)
+  ongoingCost         Decimal?            @db.Decimal(10, 2)
+  status              WorkPackageStatus?  @default(PENDING)
+  description         String?             @db.Text
+  projectId           String
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("work_packages")
+model Account {
+  id              String    @id @default(uuid())
+  accountName     String
+  accountHolderName String
+  bankName        String?
+  accountNumber   String?
+  ifscCode        String?
+  accountType     String?
+  openingBalance  Decimal?  @db.Decimal(10, 2)
+  currentBalance  Decimal   @default(0) @db.Decimal(10, 2)
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  payments        Payment[]
+
+  @@map("accounts")
+}
+
+model Payment {
+  id              String   @id @default(uuid())
+  amount          Decimal  @db.Decimal(10, 2)
+  paymentDate     DateTime @default(now())
+  description     String?  @db.Text
+  transactionRef  String?
+  accountId       String
+  projectId       String
+  addedBy         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  account Account @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [addedBy], references: [id], onDelete: Restrict)
+
+  @@map("payments")
+}
+
+}
+
+enum WorkPackageStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+}
+
+enum UserRole {
+  ADMIN
+}
