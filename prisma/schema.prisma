@@ -66,6 +66,8 @@ model WorkPackage {
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("work_packages")
+}
+
 model Account {
   id              String    @id @default(uuid())
   accountName     String
@@ -101,8 +103,6 @@ model Payment {
   user    User    @relation(fields: [addedBy], references: [id], onDelete: Restrict)
 
   @@map("payments")
-}
-
 }
 
 enum WorkPackageStatus {
