@@ -66,6 +66,9 @@ let AuthService = class AuthService {
         const user = await this.prisma.user.findUnique({
             where: { email },
         });
+        if (!user) {
+            throw new common_1.UnauthorizedException('User not found');
+        }
         const payload = {
             sub: user.id,
             email: user.email,

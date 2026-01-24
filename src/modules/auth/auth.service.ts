@@ -79,6 +79,10 @@ export class AuthService {
       where: { email },
     });
 
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
     // Generate JWT token
     const payload = {
       sub: user.id,
