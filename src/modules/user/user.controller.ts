@@ -17,6 +17,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { Public } from '../../common/decorators/public.decorator';
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -25,6 +26,7 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Create a new admin user' })
   @ApiResponse({ status: 201, description: 'User created successfully' })
