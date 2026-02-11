@@ -9,15 +9,19 @@ export class AnalyticsService {
     const [
       totalProjects,
       activeProjects,
+      completedProjects,
       totalWorkPackages,
       totalPayments,
+      totalExpenses,
       totalAccounts,
       activeAccounts,
     ] = await Promise.all([
       this.prisma.project.count(),
       this.prisma.project.count({ where: { status: 'ACTIVE' } }),
+      this.prisma.project.count({ where: { status: 'COMPLETED' } }),
       this.prisma.workPackage.count(),
       this.prisma.payment.aggregate({ _sum: { amount: true } }),
+      this.prisma.expense.aggregate({ _sum: { amount: true } }),
       this.prisma.account.count(),
       this.prisma.account.count({ where: { isActive: true } }),
     ]);
@@ -28,8 +32,10 @@ export class AnalyticsService {
       0,
     );
 
-    const totalPaid = Number(totalPayments._sum.amount || 0);
-    const totalPending = totalWorkPackageAmount - totalPaid;
+    const totalRevenue = Number(totalPayments._sum.amount || 0);
+    const totalExpenseAmount = Number(totalExpenses._sum.amount || 0);
+    const netProfit = totalRevenue - totalExpenseAmount;
+    const totalPending = totalWorkPackageAmount - totalRevenue;
 
     const workPackagesByStatus = await this.prisma.workPackage.groupBy({
       by: ['status'],
@@ -37,6 +43,12 @@ export class AnalyticsService {
     });
 
     return {
+      totalProjects,
+      activeProjects,
+      completedProjects,
+      totalRevenue,
+      totalExpenses: totalExpenseAmount,
+      netProfit,
       projects: {
         total: totalProjects,
         active: activeProjects,
@@ -48,11 +60,11 @@ export class AnalyticsService {
       },
       financial: {
         totalWorkPackageAmount,
-        totalPaid,
+        totalPaid: totalRevenue,
         totalPending,
         paymentPercentage:
           totalWorkPackageAmount > 0
-            ? ((totalPaid / totalWorkPackageAmount) * 100).toFixed(2)
+            ? ((totalRevenue / totalWorkPackageAmount) * 100).toFixed(2)
             : 0,
       },
       accounts: {

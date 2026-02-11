@@ -80,6 +80,7 @@ model Account {
   accountType     String?
   openingBalance  Decimal?  @db.Decimal(10, 2)
   currentBalance  Decimal   @default(0) @db.Decimal(10, 2)
+  isPrimary       Boolean   @default(false)
   isActive        Boolean   @default(true)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -126,6 +127,90 @@ model Expense {
   user    User     @relation(fields: [addedBy], references: [id], onDelete: Restrict)
 
   @@map("expenses")
+}
+
+model Employee {
+  id                    String              @id @default(uuid())
+  name                  String
+  email                 String              @unique
+  phone                 String?
+  designation           String?
+  joiningDate           DateTime            @default(now())
+  dailySalary           Decimal             @db.Decimal(10, 2)
+  paidLeavesPerMonth    Int                 @default(2)
+  workingDays           String              @default("1,2,3,4,5,6") // 0=Sunday, 1=Monday, ... 6=Saturday
+  isActive              Boolean             @default(true)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  leaves                Leave[]
+  compensatoryLeaves    CompensatoryLeave[]
+  salaryRecords         SalaryRecord[]
+
+  @@map("employees")
+}
+
+model CompensatoryLeave {
+  id          String    @id @default(uuid())
+  employeeId  String
+  reason      String    @db.Text
+  grantedDate DateTime  @default(now())
+  expiryDate  DateTime
+  isUsed      Boolean   @default(false)
+  usedDate    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("compensatory_leaves")
+}
+
+model Leave {
+  id          String     @id @default(uuid())
+  employeeId  String
+  leaveDate   DateTime
+  leaveType   LeaveType  @default(FULL_DAY)
+  reason      String     @db.Text
+  isCompensatory Boolean @default(false)
+  compensatoryReason String? @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("leaves")
+}
+
+model SalaryRecord {
+  id                String   @id @default(uuid())
+  employeeId        String
+  month             Int      // 1-12
+  year              Int
+  workingDays       Int
+  presentDays       Int
+  halfDays          Int      @default(0)
+  paidLeaves        Int      @default(0)
+  unpaidLeaves      Int      @default(0)
+  compensatoryLeaves Int     @default(0)
+  totalSalary       Decimal  @db.Decimal(10, 2)
+  deductions        Decimal  @default(0) @db.Decimal(10, 2)
+  netSalary         Decimal  @db.Decimal(10, 2)
+  isProcessed       Boolean  @default(false)
+  processedDate     DateTime?
+  notes             String?  @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, month, year])
+  @@map("salary_records")
+}
+
+enum LeaveType {
+  FULL_DAY
+  HALF_DAY
 }
 
 enum WorkPackageStatus {

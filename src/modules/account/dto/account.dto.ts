@@ -43,6 +43,16 @@ export class CreateAccountDto {
   @IsOptional()
   openingBalance?: number;
 
+  @ApiPropertyOptional({ example: false })
+  @IsBoolean()
+  @IsOptional()
+  isPrimary?: boolean;
+
+  @ApiPropertyOptional({ example: false })
+  @IsBoolean()
+  @IsOptional()
+  isPrimary?: boolean;
+
   @ApiPropertyOptional({ example: true })
   @IsBoolean()
   @IsOptional()
@@ -79,6 +89,11 @@ export class UpdateAccountDto {
   @IsString()
   @IsOptional()
   accountType?: string;
+
+  @ApiPropertyOptional({ example: false })
+  @IsBoolean()
+  @IsOptional()
+  isPrimary?: boolean;
 
   @ApiPropertyOptional({ example: true })
   @IsBoolean()

@@ -11,6 +11,7 @@ import { AccountModule } from './modules/account/account.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { ExpenseModule } from './modules/expense/expense.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { EmployeeModule } from './modules/employee/employee.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
 @Module({
@@ -27,6 +28,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     PaymentModule,
     ExpenseModule,
     AnalyticsModule,
+    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [
