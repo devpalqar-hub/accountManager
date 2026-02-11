@@ -30,10 +30,16 @@ export class PaymentService {
       throw new NotFoundException('Project not found');
     }
 
+    // Convert date string to ISO-8601 DateTime format if needed
+    const data: any = { ...paymentData };
+    if (data.paymentDate && !data.paymentDate.includes('T')) {
+      data.paymentDate = new Date(data.paymentDate).toISOString();
+    }
+
     // Create payment
     const payment = await this.prisma.payment.create({
       data: {
-        ...paymentData,
+        ...data,
         accountId,
         projectId,
         addedBy: userId,
@@ -222,9 +228,15 @@ export class PaymentService {
       });
     }
 
+    // Convert date string to ISO-8601 DateTime format if needed
+    const data: any = { ...updatePaymentDto };
+    if (data.paymentDate && !data.paymentDate.includes('T')) {
+      data.paymentDate = new Date(data.paymentDate).toISOString();
+    }
+
     const payment = await this.prisma.payment.update({
       where: { id },
-      data: updatePaymentDto,
+      data,
       include: {
         account: {
           select: {
