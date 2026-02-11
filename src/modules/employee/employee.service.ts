@@ -4,10 +4,14 @@ import { CreateEmployeeDto, UpdateEmployeeDto } from './dto/employee.dto';
 import { CreateLeaveDto, UpdateLeaveDto, CreateCompensatoryLeaveDto } from './dto/leave.dto';
 import { CalculateSalaryDto, ProcessSalaryDto, UpdateSalaryRecordDto } from './dto/salary.dto';
 import { Decimal } from '@prisma/client/runtime/library';
+import { TransactionLogService } from '../transaction-log/transaction-log.service';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private transactionLogService: TransactionLogService,
+  ) {}
 
   // ==================== EMPLOYEE CRUD ====================
   async create(createEmployeeDto: CreateEmployeeDto) {
@@ -366,7 +370,7 @@ export class EmployeeService {
     });
 
     // Create or update salary record
-    return this.prisma.salaryRecord.upsert({
+    const salaryRecord = await this.prisma.salaryRecord.upsert({
       where: {
         employeeId_month_year: { employeeId, month, year },
       },
@@ -405,6 +409,22 @@ export class EmployeeService {
         employee: true,
       },
     });
+
+    // Create transaction log for salary payment
+    await this.transactionLogService.create({
+      transactionType: 'DEBIT',
+      amount: netSalary,
+      accountId: primaryAccount.id,
+      accountName: primaryAccount.accountName,
+      performedBy: 'SYSTEM',
+      performedByEmail: 'system@palqar.com',
+      action: 'Salary Payment',
+      description: `Salary paid to ${employee.name} for ${month}/${year}`,
+      referenceId: salaryRecord.id,
+      referenceType: 'salary',
+    });
+
+    return salaryRecord;
   }
 
   async findSalaryRecords(employeeId?: string, year?: number) {

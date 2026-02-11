@@ -209,6 +209,34 @@ model SalaryRecord {
   @@map("salary_records")
 }
 
+model TransactionLog {
+  id            String              @id @default(uuid())
+  transactionType TransactionType
+  amount        Decimal             @db.Decimal(10, 2)
+  accountId     String
+  accountName   String
+  performedBy   String
+  performedByEmail String
+  action        String              // e.g., "Salary Payment", "Project Payment", "Expense"
+  description   String?             @db.Text
+  referenceId   String?             // ID of related payment/expense/salary record
+  referenceType String?             // "payment", "expense", "salary"
+  projectId     String?
+  projectTitle  String?
+  createdAt     DateTime            @default(now())
+
+  @@index([accountId])
+  @@index([performedBy])
+  @@index([transactionType])
+  @@index([createdAt])
+  @@map("transaction_logs")
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
 enum LeaveType {
   FULL_DAY
   HALF_DAY

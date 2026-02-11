@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../config/database.config';
 import { CreatePaymentDto, UpdatePaymentDto } from './dto/payment.dto';
 import { Decimal } from '@prisma/client/runtime/library';
+import { TransactionLogService } from '../transaction-log/transaction-log.service';
 
 @Injectable()
 export class PaymentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private transactionLogService: TransactionLogService,
+  ) {}
 
   async create(createPaymentDto: CreatePaymentDto, userId: string) {
     const { accountId, projectId, ...paymentData } = createPaymentDto;
@@ -76,6 +80,22 @@ export class PaymentService {
           increment: createPaymentDto.amount,
         },
       },
+    });
+
+    // Create transaction log
+    await this.transactionLogService.create({
+      transactionType: 'CREDIT',
+      amount: createPaymentDto.amount,
+      accountId: account.id,
+      accountName: account.accountName,
+      performedBy: userId,
+      performedByEmail: payment.user.email,
+      action: 'Project Payment',
+      description: createPaymentDto.description || `Payment received for project: ${project.title}`,
+      referenceId: payment.id,
+      referenceType: 'payment',
+      projectId: project.id,
+      projectTitle: project.title,
     });
 
     return payment;
