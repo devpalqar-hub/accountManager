@@ -9,6 +9,7 @@ import { ProjectModule } from './modules/project/project.module';
 import { WorkPackageModule } from './modules/work-package/work-package.module';
 import { AccountModule } from './modules/account/account.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { ExpenseModule } from './modules/expense/expense.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
@@ -24,6 +25,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
     WorkPackageModule,
     AccountModule,
     PaymentModule,
+    ExpenseModule,
     AnalyticsModule,
   ],
   controllers: [AppController],
