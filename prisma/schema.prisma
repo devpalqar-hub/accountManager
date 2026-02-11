@@ -136,6 +136,7 @@ model Employee {
   phone                 String?
   designation           String?
   joiningDate           DateTime            @default(now())
+  monthlySalary         Decimal             @default(0) @db.Decimal(10, 2)
   dailySalary           Decimal             @db.Decimal(10, 2)
   paidLeavesPerMonth    Int                 @default(2)
   workingDays           String              @default("1,2,3,4,5,6") // 0=Sunday, 1=Monday, ... 6=Saturday

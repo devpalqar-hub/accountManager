@@ -310,6 +310,15 @@ export class EmployeeService {
   async processSalary(processSalaryDto: ProcessSalaryDto) {
     const { employeeId, month, year, deductions = 0, notes } = processSalaryDto;
 
+    // Get employee details
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId },
+    });
+
+    if (!employee) {
+      throw new NotFoundException('Employee not found');
+    }
+
     // Check if already processed
     const existingRecord = await this.prisma.salaryRecord.findUnique({
       where: {
@@ -323,9 +332,12 @@ export class EmployeeService {
       );
     }
 
-    // Calculate salary
+    // Use monthly salary from employee record
+    const monthlySalary = Number(employee.monthlySalary);
+    const netSalary = monthlySalary - deductions;
+
+    // Calculate salary breakdown for record keeping
     const calculation = await this.calculateSalary({ employeeId, month, year });
-    const netSalary = calculation.totalSalary - deductions;
 
     // Find primary account
     const primaryAccount = await this.prisma.account.findFirst({
@@ -368,7 +380,7 @@ export class EmployeeService {
         paidLeaves: calculation.paidLeaves,
         unpaidLeaves: calculation.unpaidLeaves,
         compensatoryLeaves: calculation.compensatoryLeaves,
-        totalSalary: calculation.totalSalary,
+        totalSalary: monthlySalary,
         deductions,
         netSalary,
         isProcessed: true,
@@ -382,7 +394,7 @@ export class EmployeeService {
         paidLeaves: calculation.paidLeaves,
         unpaidLeaves: calculation.unpaidLeaves,
         compensatoryLeaves: calculation.compensatoryLeaves,
-        totalSalary: calculation.totalSalary,
+        totalSalary: monthlySalary,
         deductions,
         netSalary,
         isProcessed: true,

@@ -19,6 +19,11 @@ export class CreateEmployeeDto {
   @IsDateString()
   joiningDate?: string;
 
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  monthlySalary?: number;
+
   @IsNumber()
   @Min(0)
   dailySalary: number;
@@ -53,6 +58,11 @@ export class UpdateEmployeeDto {
   @IsOptional()
   @IsDateString()
   joiningDate?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  monthlySalary?: number;
 
   @IsOptional()
   @IsNumber()
