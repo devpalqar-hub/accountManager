@@ -7,6 +7,10 @@ export class ProjectService {
   constructor(private prisma: PrismaService) {}
 
   async create(createProjectDto: CreateProjectDto, userId: string) {
+    if (!userId) {
+      throw new NotFoundException('User ID is required');
+    }
+
     const project = await this.prisma.project.create({
       data: {
         ...createProjectDto,

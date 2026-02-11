@@ -10,6 +10,10 @@ export class PaymentService {
   async create(createPaymentDto: CreatePaymentDto, userId: string) {
     const { accountId, projectId, ...paymentData } = createPaymentDto;
 
+    if (!userId) {
+      throw new NotFoundException('User ID is required');
+    }
+
     // Verify account exists
     const account = await this.prisma.account.findUnique({
       where: { id: accountId },

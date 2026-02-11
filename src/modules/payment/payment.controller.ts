@@ -32,7 +32,8 @@ export class PaymentController {
   @ApiResponse({ status: 404, description: 'Account or Project not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   create(@Body() createPaymentDto: CreatePaymentDto, @CurrentUser() user: any) {
-    return this.paymentService.create(createPaymentDto, user.id);
+    const userId = user?.id || user?.sub;
+    return this.paymentService.create(createPaymentDto, userId);
   }
 
   @Get()

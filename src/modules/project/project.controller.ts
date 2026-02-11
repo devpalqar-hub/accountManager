@@ -34,7 +34,8 @@ export class ProjectController {
     @Body() createProjectDto: CreateProjectDto,
     @CurrentUser() user: any,
   ) {
-    return this.projectService.create(createProjectDto, user.id);
+    const userId = user?.id || user?.sub;
+    return this.projectService.create(createProjectDto, userId);
   }
 
   @Get()
@@ -48,7 +49,8 @@ export class ProjectController {
   @ApiOperation({ summary: 'Get projects created by current user' })
   @ApiResponse({ status: 200, description: 'Projects retrieved successfully' })
   findMyProjects(@CurrentUser() user: any) {
-    return this.projectService.findByUser(user.id);
+    const userId = user?.id || user?.sub;
+    return this.projectService.findByUser(userId);
   }
 
   @Get(':id')
