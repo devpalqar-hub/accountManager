@@ -15,6 +15,7 @@ export declare class AccountController {
         ifscCode: string | null;
         accountType: string | null;
         openingBalance: import("@prisma/client/runtime/library").Decimal | null;
+        isPrimary: boolean;
         currentBalance: import("@prisma/client/runtime/library").Decimal;
     }>;
     findAll(): Promise<({
@@ -33,6 +34,7 @@ export declare class AccountController {
         ifscCode: string | null;
         accountType: string | null;
         openingBalance: import("@prisma/client/runtime/library").Decimal | null;
+        isPrimary: boolean;
         currentBalance: import("@prisma/client/runtime/library").Decimal;
     })[]>;
     findOne(id: string): Promise<{
@@ -72,6 +74,7 @@ export declare class AccountController {
         ifscCode: string | null;
         accountType: string | null;
         openingBalance: import("@prisma/client/runtime/library").Decimal | null;
+        isPrimary: boolean;
         currentBalance: import("@prisma/client/runtime/library").Decimal;
     }>;
     getBalance(id: string): Promise<{
@@ -93,6 +96,7 @@ export declare class AccountController {
         ifscCode: string | null;
         accountType: string | null;
         openingBalance: import("@prisma/client/runtime/library").Decimal | null;
+        isPrimary: boolean;
         currentBalance: import("@prisma/client/runtime/library").Decimal;
     }>;
     remove(id: string): Promise<{

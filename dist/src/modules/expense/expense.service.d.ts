@@ -1,62 +1,9 @@
 import { PrismaService } from '../../config/database.config';
-import { CreatePaymentDto, UpdatePaymentDto } from './dto/payment.dto';
-import { Decimal } from '@prisma/client/runtime/library';
-export declare class PaymentService {
+import { CreateExpenseDto, UpdateExpenseDto } from './dto/expense.dto';
+export declare class ExpenseService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createPaymentDto: CreatePaymentDto, userId: string): Promise<{
-        user: {
-            email: string;
-            id: string;
-        };
-        project: {
-            title: string;
-            id: string;
-            clientDetails: string | null;
-        };
-        account: {
-            id: string;
-            accountName: string;
-            accountHolderName: string;
-        };
-    } & {
-        description: string | null;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
-        accountId: string;
-        transactionRef: string | null;
-        addedBy: string;
-    }>;
-    findAll(): Promise<({
-        user: {
-            email: string;
-            id: string;
-        };
-        project: {
-            title: string;
-            id: string;
-        };
-        account: {
-            id: string;
-            accountName: string;
-        };
-    } & {
-        description: string | null;
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
-        accountId: string;
-        transactionRef: string | null;
-        addedBy: string;
-    })[]>;
-    findOne(id: string): Promise<{
+    create(createExpenseDto: CreateExpenseDto, userId: string): Promise<{
         user: {
             email: string;
             id: string;
@@ -71,35 +18,83 @@ export declare class PaymentService {
             startDate: Date | null;
             endDate: Date | null;
             status: string | null;
-            budget: Decimal | null;
+            budget: import("@prisma/client/runtime/library").Decimal | null;
             createdBy: string;
-        };
+        } | null;
         account: {
             id: string;
-            isActive: boolean;
-            createdAt: Date;
-            updatedAt: Date;
+            accountName: string;
+            accountHolderName: string;
+        };
+    } & {
+        description: string;
+        title: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
+        accountId: string;
+        addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
+    }>;
+    findAll(): Promise<({
+        user: {
+            email: string;
+            id: string;
+        };
+        project: {
+            title: string;
+            id: string;
+        } | null;
+        account: {
+            id: string;
+            accountName: string;
+            accountHolderName: string;
+        };
+    } & {
+        description: string;
+        title: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
+        accountId: string;
+        addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
+    })[]>;
+    findOne(id: string): Promise<{
+        user: {
+            email: string;
+            id: string;
+        };
+        project: {
+            title: string;
+            id: string;
+            clientDetails: string | null;
+        } | null;
+        account: {
+            id: string;
             accountName: string;
             accountHolderName: string;
             bankName: string | null;
             accountNumber: string | null;
-            ifscCode: string | null;
-            accountType: string | null;
-            openingBalance: Decimal | null;
-            isPrimary: boolean;
-            currentBalance: Decimal;
         };
     } & {
-        description: string | null;
+        description: string;
+        title: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
         accountId: string;
-        transactionRef: string | null;
         addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
     }>;
     findByProject(projectId: string): Promise<({
         user: {
@@ -111,16 +106,17 @@ export declare class PaymentService {
             accountName: string;
         };
     } & {
-        description: string | null;
+        description: string;
+        title: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
         accountId: string;
-        transactionRef: string | null;
         addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
     })[]>;
     findByAccount(accountId: string): Promise<({
         user: {
@@ -130,20 +126,21 @@ export declare class PaymentService {
         project: {
             title: string;
             id: string;
-        };
+        } | null;
     } & {
-        description: string | null;
+        description: string;
+        title: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
         accountId: string;
-        transactionRef: string | null;
         addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
     })[]>;
-    update(id: string, updatePaymentDto: UpdatePaymentDto): Promise<{
+    update(id: string, updateExpenseDto: UpdateExpenseDto): Promise<{
         user: {
             email: string;
             id: string;
@@ -151,32 +148,33 @@ export declare class PaymentService {
         project: {
             title: string;
             id: string;
-        };
+        } | null;
         account: {
             id: string;
             accountName: string;
         };
     } & {
-        description: string | null;
+        description: string;
+        title: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        amount: Decimal;
-        projectId: string;
-        paymentDate: Date;
+        amount: import("@prisma/client/runtime/library").Decimal;
+        projectId: string | null;
         accountId: string;
-        transactionRef: string | null;
         addedBy: string;
+        expenseDate: Date;
+        reference: string | null;
     }>;
     remove(id: string): Promise<{
         message: string;
     }>;
-    getProjectPaymentSummary(projectId: string): Promise<{
-        projectId: string;
-        projectTitle: string;
-        totalWorkPackageAmount: number;
-        totalPaid: number;
-        pendingAmount: number;
-        paymentPercentage: string | number;
+    getTotalByProject(projectId: string): Promise<{
+        total: number;
+        count: number;
+    }>;
+    getTotalByAccount(accountId: string): Promise<{
+        total: number;
+        count: number;
     }>;
 }

@@ -6,6 +6,8 @@ export declare class CreateAccountDto {
     ifscCode?: string;
     accountType?: string;
     openingBalance?: number;
+    isPrimary?: boolean;
+    isPrimary?: boolean;
     isActive?: boolean;
 }
 export declare class UpdateAccountDto {
@@ -15,5 +17,6 @@ export declare class UpdateAccountDto {
     accountNumber?: string;
     ifscCode?: string;
     accountType?: string;
+    isPrimary?: boolean;
     isActive?: boolean;
 }

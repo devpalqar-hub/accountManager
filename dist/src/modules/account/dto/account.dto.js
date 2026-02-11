@@ -20,6 +20,8 @@ class CreateAccountDto {
     ifscCode;
     accountType;
     openingBalance;
+    isPrimary;
+    isPrimary;
     isActive;
 }
 exports.CreateAccountDto = CreateAccountDto;
@@ -66,6 +68,18 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateAccountDto.prototype, "openingBalance", void 0);
 __decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: false }),
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateAccountDto.prototype, "isPrimary", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: false }),
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateAccountDto.prototype, "isPrimary", void 0);
+__decorate([
     (0, swagger_1.ApiPropertyOptional)({ example: true }),
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
@@ -78,6 +92,7 @@ class UpdateAccountDto {
     accountNumber;
     ifscCode;
     accountType;
+    isPrimary;
     isActive;
 }
 exports.UpdateAccountDto = UpdateAccountDto;
@@ -117,6 +132,12 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateAccountDto.prototype, "accountType", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ example: false }),
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateAccountDto.prototype, "isPrimary", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ example: true }),
     (0, class_validator_1.IsBoolean)(),

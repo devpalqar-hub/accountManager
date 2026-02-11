@@ -3,6 +3,12 @@ export declare class AnalyticsController {
     private readonly analyticsService;
     constructor(analyticsService: AnalyticsService);
     getDashboard(): Promise<{
+        totalProjects: number;
+        activeProjects: number;
+        completedProjects: number;
+        totalRevenue: number;
+        totalExpenses: number;
+        netProfit: number;
         projects: {
             total: number;
             active: number;

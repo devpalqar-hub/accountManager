@@ -3,6 +3,12 @@ export declare class AnalyticsService {
     private prisma;
     constructor(prisma: PrismaService);
     getDashboardOverview(): Promise<{
+        totalProjects: number;
+        activeProjects: number;
+        completedProjects: number;
+        totalRevenue: number;
+        totalExpenses: number;
+        netProfit: number;
         projects: {
             total: number;
             active: number;

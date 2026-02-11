@@ -18,7 +18,9 @@ const project_module_1 = require("./modules/project/project.module");
 const work_package_module_1 = require("./modules/work-package/work-package.module");
 const account_module_1 = require("./modules/account/account.module");
 const payment_module_1 = require("./modules/payment/payment.module");
+const expense_module_1 = require("./modules/expense/expense.module");
 const analytics_module_1 = require("./modules/analytics/analytics.module");
+const employee_module_1 = require("./modules/employee/employee.module");
 const jwt_auth_guard_1 = require("./common/guards/jwt-auth.guard");
 let AppModule = class AppModule {
 };
@@ -36,7 +38,9 @@ exports.AppModule = AppModule = __decorate([
             work_package_module_1.WorkPackageModule,
             account_module_1.AccountModule,
             payment_module_1.PaymentModule,
+            expense_module_1.ExpenseModule,
             analytics_module_1.AnalyticsModule,
+            employee_module_1.EmployeeModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [
