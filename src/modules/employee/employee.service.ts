@@ -3,6 +3,7 @@ import { PrismaService } from '../../config/database.config';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto/employee.dto';
 import { CreateLeaveDto, UpdateLeaveDto, CreateCompensatoryLeaveDto } from './dto/leave.dto';
 import { CalculateSalaryDto, ProcessSalaryDto, UpdateSalaryRecordDto } from './dto/salary.dto';
+import { Decimal } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class EmployeeService {

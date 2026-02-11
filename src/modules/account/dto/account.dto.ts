@@ -48,11 +48,6 @@ export class CreateAccountDto {
   @IsOptional()
   isPrimary?: boolean;
 
-  @ApiPropertyOptional({ example: false })
-  @IsBoolean()
-  @IsOptional()
-  isPrimary?: boolean;
-
   @ApiPropertyOptional({ example: true })
   @IsBoolean()
   @IsOptional()
