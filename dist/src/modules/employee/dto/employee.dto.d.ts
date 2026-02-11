@@ -4,6 +4,7 @@ export declare class CreateEmployeeDto {
     phone?: string;
     designation?: string;
     joiningDate?: string;
+    monthlySalary?: number;
     dailySalary: number;
     paidLeavesPerMonth?: number;
     workingDays?: string;
@@ -14,6 +15,7 @@ export declare class UpdateEmployeeDto {
     phone?: string;
     designation?: string;
     joiningDate?: string;
+    monthlySalary?: number;
     dailySalary?: number;
     paidLeavesPerMonth?: number;
     workingDays?: string;

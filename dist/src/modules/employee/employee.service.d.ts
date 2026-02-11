@@ -16,6 +16,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: Decimal;
         dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -36,6 +37,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: Decimal;
         dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -93,6 +95,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: Decimal;
         dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -107,6 +110,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: Decimal;
         dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -121,6 +125,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: Decimal;
         dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -228,6 +233,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: Decimal;
             dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
@@ -263,6 +269,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: Decimal;
             dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
@@ -298,6 +305,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: Decimal;
             dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;

@@ -264,6 +264,12 @@ let EmployeeService = class EmployeeService {
     }
     async processSalary(processSalaryDto) {
         const { employeeId, month, year, deductions = 0, notes } = processSalaryDto;
+        const employee = await this.prisma.employee.findUnique({
+            where: { id: employeeId },
+        });
+        if (!employee) {
+            throw new common_1.NotFoundException('Employee not found');
+        }
         const existingRecord = await this.prisma.salaryRecord.findUnique({
             where: {
                 employeeId_month_year: { employeeId, month, year },
@@ -272,8 +278,9 @@ let EmployeeService = class EmployeeService {
         if (existingRecord && existingRecord.isProcessed) {
             throw new common_1.BadRequestException(`Salary for ${month}/${year} is already processed`);
         }
+        const monthlySalary = Number(employee.monthlySalary);
+        const netSalary = monthlySalary - deductions;
         const calculation = await this.calculateSalary({ employeeId, month, year });
-        const netSalary = calculation.totalSalary - deductions;
         const primaryAccount = await this.prisma.account.findFirst({
             where: { isPrimary: true, isActive: true },
         });
@@ -303,7 +310,7 @@ let EmployeeService = class EmployeeService {
                 paidLeaves: calculation.paidLeaves,
                 unpaidLeaves: calculation.unpaidLeaves,
                 compensatoryLeaves: calculation.compensatoryLeaves,
-                totalSalary: calculation.totalSalary,
+                totalSalary: monthlySalary,
                 deductions,
                 netSalary,
                 isProcessed: true,
@@ -317,7 +324,7 @@ let EmployeeService = class EmployeeService {
                 paidLeaves: calculation.paidLeaves,
                 unpaidLeaves: calculation.unpaidLeaves,
                 compensatoryLeaves: calculation.compensatoryLeaves,
-                totalSalary: calculation.totalSalary,
+                totalSalary: monthlySalary,
                 deductions,
                 netSalary,
                 isProcessed: true,

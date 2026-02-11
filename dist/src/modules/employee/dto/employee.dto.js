@@ -17,6 +17,7 @@ class CreateEmployeeDto {
     phone;
     designation;
     joiningDate;
+    monthlySalary;
     dailySalary;
     paidLeavesPerMonth;
     workingDays;
@@ -46,6 +47,12 @@ __decorate([
     __metadata("design:type", String)
 ], CreateEmployeeDto.prototype, "joiningDate", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateEmployeeDto.prototype, "monthlySalary", void 0);
+__decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
@@ -67,6 +74,7 @@ class UpdateEmployeeDto {
     phone;
     designation;
     joiningDate;
+    monthlySalary;
     dailySalary;
     paidLeavesPerMonth;
     workingDays;
@@ -98,6 +106,12 @@ __decorate([
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", String)
 ], UpdateEmployeeDto.prototype, "joiningDate", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], UpdateEmployeeDto.prototype, "monthlySalary", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
