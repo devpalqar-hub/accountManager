@@ -25,13 +25,15 @@ let ProjectController = class ProjectController {
         this.projectService = projectService;
     }
     create(createProjectDto, user) {
-        return this.projectService.create(createProjectDto, user.id);
+        const userId = user?.id || user?.sub;
+        return this.projectService.create(createProjectDto, userId);
     }
     findAll() {
         return this.projectService.findAll();
     }
     findMyProjects(user) {
-        return this.projectService.findByUser(user.id);
+        const userId = user?.id || user?.sub;
+        return this.projectService.findByUser(userId);
     }
     findOne(id) {
         return this.projectService.findOne(id);

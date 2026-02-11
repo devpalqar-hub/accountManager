@@ -16,10 +16,15 @@ export declare class AuthService {
     verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<{
         accessToken: string;
         user: {
-            id: any;
-            email: any;
-            role: any;
+            id: string;
+            email: string;
+            role: "ADMIN";
         };
     }>;
-    validateUser(userId: string): Promise<any>;
+    validateUser(userId: string): Promise<{
+        email: string;
+        id: string;
+        role: "ADMIN";
+        isActive: boolean;
+    } | null>;
 }

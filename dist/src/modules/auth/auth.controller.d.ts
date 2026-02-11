@@ -9,9 +9,9 @@ export declare class AuthController {
     verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<{
         accessToken: string;
         user: {
-            id: any;
-            email: any;
-            role: any;
+            id: string;
+            email: string;
+            role: "ADMIN";
         };
     }>;
 }

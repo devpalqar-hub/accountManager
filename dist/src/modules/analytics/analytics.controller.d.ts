@@ -4,89 +4,126 @@ export declare class AnalyticsController {
     constructor(analyticsService: AnalyticsService);
     getDashboard(): Promise<{
         projects: {
-            total: any;
-            active: any;
+            total: number;
+            active: number;
             inactive: number;
         };
         workPackages: {
-            total: any;
-            byStatus: any;
+            total: number;
+            byStatus: (import(".prisma/client").Prisma.PickEnumerable<import(".prisma/client").Prisma.WorkPackageGroupByOutputType, "status"[]> & {
+                _count: number;
+            })[];
         };
         financial: {
-            totalWorkPackageAmount: any;
+            totalWorkPackageAmount: number;
             totalPaid: number;
             totalPending: number;
             paymentPercentage: string | number;
         };
         accounts: {
-            total: any;
-            active: any;
+            total: number;
+            active: number;
             inactive: number;
         };
     }>;
     getProjectAnalytics(): Promise<{
-        projects: any;
+        projects: {
+            projectId: string;
+            projectTitle: string;
+            status: string | null;
+            clientDetails: string | null;
+            createdBy: string;
+            budget: number;
+            totalWorkPackages: number;
+            completedWorkPackages: number;
+            completionPercentage: string | number;
+            financial: {
+                totalWorkPackageAmount: number;
+                totalPaid: number;
+                pending: number;
+                paymentPercentage: string | number;
+            };
+            startDate: Date | null;
+            endDate: Date | null;
+        }[];
         summary: {
-            totalProjects: any;
-            totalBudget: any;
-            totalWorkPackageAmount: any;
-            totalPaid: any;
-            totalPending: any;
+            totalProjects: number;
+            totalBudget: number;
+            totalWorkPackageAmount: number;
+            totalPaid: number;
+            totalPending: number;
         };
     }>;
     getFinancialAnalytics(startDate?: string, endDate?: string): Promise<{
-        totalRevenue: any;
-        totalPayments: any;
+        totalRevenue: number;
+        totalPayments: number;
         averagePayment: number;
-        paymentsByAccount: any;
-        paymentsByProject: any;
-        paymentsByMonth: any;
-        accountBalances: any;
-        totalAccountBalance: any;
+        paymentsByAccount: Record<string, number>;
+        paymentsByProject: Record<string, number>;
+        paymentsByMonth: Record<string, number>;
+        accountBalances: {
+            accountName: string;
+            balance: number;
+            isActive: boolean;
+        }[];
+        totalAccountBalance: number;
     }>;
     getWorkPackageAnalytics(): Promise<{
-        total: any;
-        statusDistribution: any;
+        total: number;
+        statusDistribution: Record<string, number>;
         financial: {
-            totalAmount: any;
-            totalAdvance: any;
-            totalMiscellaneous: any;
-            totalOngoingCost: any;
+            totalAmount: number;
+            totalAdvance: number;
+            totalMiscellaneous: number;
+            totalOngoingCost: number;
             balance: number;
         };
         completion: {
-            completed: any;
-            inProgress: any;
+            completed: number;
+            inProgress: number;
             completionRate: string | number;
         };
-        workPackagesByProject: any;
+        workPackagesByProject: Record<string, {
+            count: number;
+            totalAmount: number;
+        }>;
     }>;
     getMonthlyReport(year: string, month: string): Promise<{
         period: string;
         revenue: {
-            total: any;
-            paymentsCount: any;
+            total: number;
+            paymentsCount: number;
             averagePayment: number;
         };
-        payments: any;
+        payments: {
+            id: string;
+            amount: number;
+            date: Date;
+            account: string;
+            project: string;
+            addedBy: string;
+        }[];
         activity: {
-            projectsCreated: any;
-            workPackagesCreated: any;
-            paymentsReceived: any;
+            projectsCreated: number;
+            workPackagesCreated: number;
+            paymentsReceived: number;
         };
     }>;
     getYearlyReport(year: string): Promise<{
         year: number;
         revenue: {
-            total: any;
-            paymentsCount: any;
+            total: number;
+            paymentsCount: number;
             averagePayment: number;
         };
-        monthlyBreakdown: any;
+        monthlyBreakdown: Record<number, {
+            revenue: number;
+            count: number;
+        }>;
         activity: {
-            projectsCreated: any;
-            workPackagesCreated: any;
-            paymentsReceived: any;
+            projectsCreated: number;
+            workPackagesCreated: number;
+            paymentsReceived: number;
         };
     }>;
 }

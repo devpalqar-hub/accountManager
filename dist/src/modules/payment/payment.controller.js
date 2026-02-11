@@ -25,7 +25,8 @@ let PaymentController = class PaymentController {
         this.paymentService = paymentService;
     }
     create(createPaymentDto, user) {
-        return this.paymentService.create(createPaymentDto, user.id);
+        const userId = user?.id || user?.sub;
+        return this.paymentService.create(createPaymentDto, userId);
     }
     findAll() {
         return this.paymentService.findAll();

@@ -19,6 +19,9 @@ let PaymentService = class PaymentService {
     }
     async create(createPaymentDto, userId) {
         const { accountId, projectId, ...paymentData } = createPaymentDto;
+        if (!userId) {
+            throw new common_1.NotFoundException('User ID is required');
+        }
         const account = await this.prisma.account.findUnique({
             where: { id: accountId },
         });
@@ -31,9 +34,13 @@ let PaymentService = class PaymentService {
         if (!project) {
             throw new common_1.NotFoundException('Project not found');
         }
+        const data = { ...paymentData };
+        if (data.paymentDate && !data.paymentDate.includes('T')) {
+            data.paymentDate = new Date(data.paymentDate).toISOString();
+        }
         const payment = await this.prisma.payment.create({
             data: {
-                ...paymentData,
+                ...data,
                 accountId,
                 projectId,
                 addedBy: userId,
@@ -201,9 +208,13 @@ let PaymentService = class PaymentService {
                 },
             });
         }
+        const data = { ...updatePaymentDto };
+        if (data.paymentDate && !data.paymentDate.includes('T')) {
+            data.paymentDate = new Date(data.paymentDate).toISOString();
+        }
         const payment = await this.prisma.payment.update({
             where: { id },
-            data: updatePaymentDto,
+            data,
             include: {
                 account: {
                     select: {

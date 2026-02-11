@@ -24,8 +24,15 @@ let WorkPackageService = class WorkPackageService {
         if (!project) {
             throw new common_1.NotFoundException('Project not found');
         }
+        const data = { ...createWorkPackageDto };
+        if (data.startDate && !data.startDate.includes('T')) {
+            data.startDate = new Date(data.startDate).toISOString();
+        }
+        if (data.completionDate && !data.completionDate.includes('T')) {
+            data.completionDate = new Date(data.completionDate).toISOString();
+        }
         const workPackage = await this.prisma.workPackage.create({
-            data: createWorkPackageDto,
+            data,
             include: {
                 project: {
                     select: {
@@ -90,9 +97,16 @@ let WorkPackageService = class WorkPackageService {
     }
     async update(id, updateWorkPackageDto) {
         await this.findOne(id);
+        const data = { ...updateWorkPackageDto };
+        if (data.startDate && !data.startDate.includes('T')) {
+            data.startDate = new Date(data.startDate).toISOString();
+        }
+        if (data.completionDate && !data.completionDate.includes('T')) {
+            data.completionDate = new Date(data.completionDate).toISOString();
+        }
         const workPackage = await this.prisma.workPackage.update({
             where: { id },
-            data: updateWorkPackageDto,
+            data,
             include: {
                 project: {
                     select: {

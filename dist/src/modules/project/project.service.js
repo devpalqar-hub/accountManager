@@ -18,11 +18,21 @@ let ProjectService = class ProjectService {
         this.prisma = prisma;
     }
     async create(createProjectDto, userId) {
+        if (!userId) {
+            throw new common_1.NotFoundException('User ID is required');
+        }
+        const data = {
+            ...createProjectDto,
+            createdBy: userId,
+        };
+        if (data.startDate && !data.startDate.includes('T')) {
+            data.startDate = new Date(data.startDate).toISOString();
+        }
+        if (data.endDate && !data.endDate.includes('T')) {
+            data.endDate = new Date(data.endDate).toISOString();
+        }
         const project = await this.prisma.project.create({
-            data: {
-                ...createProjectDto,
-                createdBy: userId,
-            },
+            data,
             include: {
                 user: {
                     select: {
@@ -68,9 +78,16 @@ let ProjectService = class ProjectService {
     }
     async update(id, updateProjectDto) {
         await this.findOne(id);
+        const data = { ...updateProjectDto };
+        if (data.startDate && !data.startDate.includes('T')) {
+            data.startDate = new Date(data.startDate).toISOString();
+        }
+        if (data.endDate && !data.endDate.includes('T')) {
+            data.endDate = new Date(data.endDate).toISOString();
+        }
         const project = await this.prisma.project.update({
             where: { id },
-            data: updateProjectDto,
+            data,
             include: {
                 user: {
                     select: {

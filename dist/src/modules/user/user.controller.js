@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const user_service_1 = require("./user.service");
 const user_dto_1 = require("./dto/user.dto");
 const jwt_auth_guard_1 = require("../../common/guards/jwt-auth.guard");
+const public_decorator_1 = require("../../common/decorators/public.decorator");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -41,6 +42,7 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Post)(),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new admin user' }),
     (0, swagger_1.ApiResponse)({ status: 201, description: 'User created successfully' }),
