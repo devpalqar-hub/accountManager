@@ -2,6 +2,7 @@ import { PrismaService } from '../../config/database.config';
 import { CreateEmployeeDto, UpdateEmployeeDto } from './dto/employee.dto';
 import { CreateLeaveDto, UpdateLeaveDto, CreateCompensatoryLeaveDto } from './dto/leave.dto';
 import { CalculateSalaryDto, ProcessSalaryDto, UpdateSalaryRecordDto } from './dto/salary.dto';
+import { Decimal } from '@prisma/client/runtime/library';
 export declare class EmployeeService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -15,7 +16,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
     }>;
@@ -35,7 +36,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
     })[]>;
@@ -70,7 +71,7 @@ export declare class EmployeeService {
             month: number;
             workingDays: number;
             employeeId: string;
-            deductions: import("@prisma/client/runtime/library").Decimal;
+            deductions: Decimal;
             notes: string | null;
             isProcessed: boolean;
             compensatoryLeaves: number;
@@ -78,8 +79,8 @@ export declare class EmployeeService {
             halfDays: number;
             paidLeaves: number;
             unpaidLeaves: number;
-            totalSalary: import("@prisma/client/runtime/library").Decimal;
-            netSalary: import("@prisma/client/runtime/library").Decimal;
+            totalSalary: Decimal;
+            netSalary: Decimal;
             processedDate: Date | null;
         }[];
     } & {
@@ -92,7 +93,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
     }>;
@@ -106,7 +107,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
     }>;
@@ -120,7 +121,7 @@ export declare class EmployeeService {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
     }>;
@@ -211,7 +212,7 @@ export declare class EmployeeService {
         paidLeaves: number;
         unpaidLeaves: number;
         compensatoryLeaves: number;
-        dailySalary: import("@prisma/client/runtime/library").Decimal;
+        dailySalary: Decimal;
         totalSalary: number;
         deductions: number;
         netSalary: number;
@@ -227,7 +228,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
-            dailySalary: import("@prisma/client/runtime/library").Decimal;
+            dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
         };
@@ -239,7 +240,7 @@ export declare class EmployeeService {
         month: number;
         workingDays: number;
         employeeId: string;
-        deductions: import("@prisma/client/runtime/library").Decimal;
+        deductions: Decimal;
         notes: string | null;
         isProcessed: boolean;
         compensatoryLeaves: number;
@@ -247,8 +248,8 @@ export declare class EmployeeService {
         halfDays: number;
         paidLeaves: number;
         unpaidLeaves: number;
-        totalSalary: import("@prisma/client/runtime/library").Decimal;
-        netSalary: import("@prisma/client/runtime/library").Decimal;
+        totalSalary: Decimal;
+        netSalary: Decimal;
         processedDate: Date | null;
     }>;
     findSalaryRecords(employeeId?: string, year?: number): Promise<({
@@ -262,7 +263,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
-            dailySalary: import("@prisma/client/runtime/library").Decimal;
+            dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
         };
@@ -274,7 +275,7 @@ export declare class EmployeeService {
         month: number;
         workingDays: number;
         employeeId: string;
-        deductions: import("@prisma/client/runtime/library").Decimal;
+        deductions: Decimal;
         notes: string | null;
         isProcessed: boolean;
         compensatoryLeaves: number;
@@ -282,8 +283,8 @@ export declare class EmployeeService {
         halfDays: number;
         paidLeaves: number;
         unpaidLeaves: number;
-        totalSalary: import("@prisma/client/runtime/library").Decimal;
-        netSalary: import("@prisma/client/runtime/library").Decimal;
+        totalSalary: Decimal;
+        netSalary: Decimal;
         processedDate: Date | null;
     })[]>;
     findSalaryRecord(id: string): Promise<{
@@ -297,7 +298,7 @@ export declare class EmployeeService {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
-            dailySalary: import("@prisma/client/runtime/library").Decimal;
+            dailySalary: Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
         };
@@ -309,7 +310,7 @@ export declare class EmployeeService {
         month: number;
         workingDays: number;
         employeeId: string;
-        deductions: import("@prisma/client/runtime/library").Decimal;
+        deductions: Decimal;
         notes: string | null;
         isProcessed: boolean;
         compensatoryLeaves: number;
@@ -317,8 +318,8 @@ export declare class EmployeeService {
         halfDays: number;
         paidLeaves: number;
         unpaidLeaves: number;
-        totalSalary: import("@prisma/client/runtime/library").Decimal;
-        netSalary: import("@prisma/client/runtime/library").Decimal;
+        totalSalary: Decimal;
+        netSalary: Decimal;
         processedDate: Date | null;
     }>;
     updateSalaryRecord(id: string, updateDto: UpdateSalaryRecordDto): Promise<{
@@ -329,7 +330,7 @@ export declare class EmployeeService {
         month: number;
         workingDays: number;
         employeeId: string;
-        deductions: import("@prisma/client/runtime/library").Decimal;
+        deductions: Decimal;
         notes: string | null;
         isProcessed: boolean;
         compensatoryLeaves: number;
@@ -337,8 +338,8 @@ export declare class EmployeeService {
         halfDays: number;
         paidLeaves: number;
         unpaidLeaves: number;
-        totalSalary: import("@prisma/client/runtime/library").Decimal;
-        netSalary: import("@prisma/client/runtime/library").Decimal;
+        totalSalary: Decimal;
+        netSalary: Decimal;
         processedDate: Date | null;
     }>;
 }

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EmployeeService = void 0;
 const common_1 = require("@nestjs/common");
 const database_config_1 = require("../../config/database.config");
+const library_1 = require("@prisma/client/runtime/library");
 let EmployeeService = class EmployeeService {
     prisma;
     constructor(prisma) {
@@ -283,7 +284,7 @@ let EmployeeService = class EmployeeService {
         if (currentBalance < netSalary) {
             throw new common_1.BadRequestException(`Insufficient balance in primary account. Available: ₹${currentBalance}, Required: ₹${netSalary}`);
         }
-        const newBalance = new Decimal(currentBalance).minus(new Decimal(netSalary));
+        const newBalance = new library_1.Decimal(currentBalance).minus(new library_1.Decimal(netSalary));
         await this.prisma.account.update({
             where: { id: primaryAccount.id },
             data: { currentBalance: newBalance },

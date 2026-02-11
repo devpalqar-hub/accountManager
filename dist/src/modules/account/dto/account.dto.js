@@ -21,7 +21,6 @@ class CreateAccountDto {
     accountType;
     openingBalance;
     isPrimary;
-    isPrimary;
     isActive;
 }
 exports.CreateAccountDto = CreateAccountDto;
@@ -67,12 +66,6 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], CreateAccountDto.prototype, "openingBalance", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ example: false }),
-    (0, class_validator_1.IsBoolean)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", Boolean)
-], CreateAccountDto.prototype, "isPrimary", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ example: false }),
     (0, class_validator_1.IsBoolean)(),

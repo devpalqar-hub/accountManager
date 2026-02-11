@@ -7,7 +7,6 @@ export declare class CreateAccountDto {
     accountType?: string;
     openingBalance?: number;
     isPrimary?: boolean;
-    isPrimary?: boolean;
     isActive?: boolean;
 }
 export declare class UpdateAccountDto {
