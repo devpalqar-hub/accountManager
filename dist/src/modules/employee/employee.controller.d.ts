@@ -15,6 +15,7 @@ export declare class EmployeeController {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: import("@prisma/client/runtime/library").Decimal;
         dailySalary: import("@prisma/client/runtime/library").Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -35,6 +36,7 @@ export declare class EmployeeController {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: import("@prisma/client/runtime/library").Decimal;
         dailySalary: import("@prisma/client/runtime/library").Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -92,6 +94,7 @@ export declare class EmployeeController {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: import("@prisma/client/runtime/library").Decimal;
         dailySalary: import("@prisma/client/runtime/library").Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -106,6 +109,7 @@ export declare class EmployeeController {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: import("@prisma/client/runtime/library").Decimal;
         dailySalary: import("@prisma/client/runtime/library").Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -120,6 +124,7 @@ export declare class EmployeeController {
         phone: string | null;
         designation: string | null;
         joiningDate: Date;
+        monthlySalary: import("@prisma/client/runtime/library").Decimal;
         dailySalary: import("@prisma/client/runtime/library").Decimal;
         paidLeavesPerMonth: number;
         workingDays: string;
@@ -227,6 +232,7 @@ export declare class EmployeeController {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: import("@prisma/client/runtime/library").Decimal;
             dailySalary: import("@prisma/client/runtime/library").Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
@@ -262,6 +268,7 @@ export declare class EmployeeController {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: import("@prisma/client/runtime/library").Decimal;
             dailySalary: import("@prisma/client/runtime/library").Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
@@ -297,6 +304,7 @@ export declare class EmployeeController {
             phone: string | null;
             designation: string | null;
             joiningDate: Date;
+            monthlySalary: import("@prisma/client/runtime/library").Decimal;
             dailySalary: import("@prisma/client/runtime/library").Decimal;
             paidLeavesPerMonth: number;
             workingDays: string;
