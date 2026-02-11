@@ -19,8 +19,19 @@ export class WorkPackageService {
       throw new NotFoundException('Project not found');
     }
 
+    // Convert date strings to ISO-8601 DateTime format
+    const data: any = { ...createWorkPackageDto };
+
+    // Handle date conversion - if date is in YYYY-MM-DD format, convert to ISO-8601
+    if (data.startDate && !data.startDate.includes('T')) {
+      data.startDate = new Date(data.startDate).toISOString();
+    }
+    if (data.completionDate && !data.completionDate.includes('T')) {
+      data.completionDate = new Date(data.completionDate).toISOString();
+    }
+
     const workPackage = await this.prisma.workPackage.create({
-      data: createWorkPackageDto,
+      data,
       include: {
         project: {
           select: {
@@ -93,9 +104,20 @@ export class WorkPackageService {
   async update(id: string, updateWorkPackageDto: UpdateWorkPackageDto) {
     await this.findOne(id); // Check if work package exists
 
+    // Convert date strings to ISO-8601 DateTime format
+    const data: any = { ...updateWorkPackageDto };
+
+    // Handle date conversion - if date is in YYYY-MM-DD format, convert to ISO-8601
+    if (data.startDate && !data.startDate.includes('T')) {
+      data.startDate = new Date(data.startDate).toISOString();
+    }
+    if (data.completionDate && !data.completionDate.includes('T')) {
+      data.completionDate = new Date(data.completionDate).toISOString();
+    }
+
     const workPackage = await this.prisma.workPackage.update({
       where: { id },
-      data: updateWorkPackageDto,
+      data,
       include: {
         project: {
           select: {

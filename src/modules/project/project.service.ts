@@ -11,11 +11,22 @@ export class ProjectService {
       throw new NotFoundException('User ID is required');
     }
 
+    // Convert date strings to ISO-8601 DateTime format
+    const data: any = {
+      ...createProjectDto,
+      createdBy: userId,
+    };
+
+    // Handle date conversion - if date is in YYYY-MM-DD format, convert to ISO-8601
+    if (data.startDate && !data.startDate.includes('T')) {
+      data.startDate = new Date(data.startDate).toISOString();
+    }
+    if (data.endDate && !data.endDate.includes('T')) {
+      data.endDate = new Date(data.endDate).toISOString();
+    }
+
     const project = await this.prisma.project.create({
-      data: {
-        ...createProjectDto,
-        createdBy: userId,
-      },
+      data,
       include: {
         user: {
           select: {
@@ -68,9 +79,20 @@ export class ProjectService {
   async update(id: string, updateProjectDto: UpdateProjectDto) {
     await this.findOne(id); // Check if project exists
 
+    // Convert date strings to ISO-8601 DateTime format
+    const data: any = { ...updateProjectDto };
+
+    // Handle date conversion - if date is in YYYY-MM-DD format, convert to ISO-8601
+    if (data.startDate && !data.startDate.includes('T')) {
+      data.startDate = new Date(data.startDate).toISOString();
+    }
+    if (data.endDate && !data.endDate.includes('T')) {
+      data.endDate = new Date(data.endDate).toISOString();
+    }
+
     const project = await this.prisma.project.update({
       where: { id },
-      data: updateProjectDto,
+      data,
       include: {
         user: {
           select: {
