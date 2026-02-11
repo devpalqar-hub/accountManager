@@ -5,6 +5,7 @@ import { CreateLeaveDto, UpdateLeaveDto, CreateCompensatoryLeaveDto } from './dt
 import { CalculateSalaryDto, ProcessSalaryDto, UpdateSalaryRecordDto } from './dto/salary.dto';
 import { Decimal } from '@prisma/client/runtime/library';
 import { TransactionLogService } from '../transaction-log/transaction-log.service';
+import { TransactionType } from '../transaction-log/dto/transaction-log.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -412,7 +413,7 @@ export class EmployeeService {
 
     // Create transaction log for salary payment
     await this.transactionLogService.create({
-      transactionType: 'DEBIT',
+      transactionType: TransactionType.DEBIT,
       amount: netSalary,
       accountId: primaryAccount.id,
       accountName: primaryAccount.accountName,

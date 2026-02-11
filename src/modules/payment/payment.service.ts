@@ -3,6 +3,7 @@ import { PrismaService } from '../../config/database.config';
 import { CreatePaymentDto, UpdatePaymentDto } from './dto/payment.dto';
 import { Decimal } from '@prisma/client/runtime/library';
 import { TransactionLogService } from '../transaction-log/transaction-log.service';
+import { TransactionType } from '../transaction-log/dto/transaction-log.dto';
 
 @Injectable()
 export class PaymentService {
@@ -84,7 +85,7 @@ export class PaymentService {
 
     // Create transaction log
     await this.transactionLogService.create({
-      transactionType: 'CREDIT',
+      transactionType: TransactionType.CREDIT,
       amount: createPaymentDto.amount,
       accountId: account.id,
       accountName: account.accountName,
